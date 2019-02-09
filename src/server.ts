@@ -10,11 +10,12 @@ class Server {
         this.app = express();
         this.app.use('/graphql', bodyParser.json(), graphqlExpress({ schema })); // The GraphQL endpoint
         this.app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' })); // GraphiQL, a visual editor for queries
+        this.app.set('port', (process.env.PORT || 4000));
     }
 
     start() {
-        this.app.listen(4000, () => {
-            console.log('Go to http://localhost:4000/graphiql to run queries!');
+        this.app.listen(this.app.get('port'), () => {
+            console.log('Node app is running on port:', this.app.get('port'));
         });
     }
 }
