@@ -13,6 +13,8 @@ class Server {
         this.server = new ApolloServer({
             typeDefs,
             resolvers,
+            introspection: true,
+            playground: true,
             dataSources: () => ({
                 userAPI: new UserAPI({ store }),
             })
