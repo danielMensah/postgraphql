@@ -20,7 +20,8 @@ class Server {
     }
 
     start() {
-        this.server.listen().then(({ url }) => {
+        const PORT = process.env.NODE_ENV === 'dev' ? 4000 : process.env.PORT;
+        this.server.listen(PORT).then(({ url }) => {
             console.log(`🚀 Server ready at ${url}`);
         });
     }
