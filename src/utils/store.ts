@@ -12,10 +12,12 @@ export default class Store {
         this.db = this.pgp(process.env.DATABASE_URL);
     }
 
-    async pgFunction(functionName, data = []): Promise<[object]> {
+    async pgFunction(functionName, data = {}): Promise<[object]> {
+        const payload = this.generatePayloadArray(data);
+
         const params = [
             "f567a180-d6df-434d-8567-46cee1f0ac46",
-            ...data
+            ...payload
         ];
 
         const [err, result] = await this.utils.to(this.db.func(functionName, params));
@@ -26,4 +28,17 @@ export default class Store {
         return result[0][functionName];
     }
 
+    generatePayloadArray(data: object) {
+        let collection = [];
+
+        for (let key in data) {
+            collection.push(data[key])
+        }
+
+        return collection;
+    }
 }
+
+// const store = new Store();
+// console.log(store.generatePayloadArray({}));
+// store.pgFunction('bababa', ['firstName', 'lastName'], { firstName: 'Daniel', lastName: 'Mensah' });
