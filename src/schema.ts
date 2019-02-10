@@ -1,14 +1,14 @@
-import { makeExecutableSchema } from 'graphql-tools';
-import resolvers from './resolvers';
+const { gql } = require('apollo-server');
 
-// The GraphQL schema in string form
-const typeDefs = `
-  type Query { books: [Book] }
-  type Book { title: String, author: String }
+export default gql`
+  type Query { 
+    getUsers: [User]!
+  }
+  type User {
+    id: String!,
+    firstName: String!,
+    lastName: String!,
+    gender: String,
+    email: String
+  }
 `;
-
-// Put together a schema
-export default makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});

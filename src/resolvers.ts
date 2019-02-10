@@ -1,9 +1,7 @@
-import books from './db';
-
-const resolvers = {
-  Query: {
-    books: () => books
-  },
+export default {
+    Query: {
+        getUsers: async (_, __, { dataSources }) => {
+            return dataSources.userAPI.getUsers();
+        }
+    },
 };
-
-export default resolvers;

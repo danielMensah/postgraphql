@@ -1,21 +1,27 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import schema from './schema';
+import { ApolloServer } from 'apollo-server';
+import resolvers from './resolvers';
+import UserAPI from './datasources/userAPI';
+import typeDefs from './schema';
+import Store from "./utils/store";
 
 class Server {
-    private app;
+    private readonly server;
 
     constructor() {
-        this.app = express();
-        this.app.use('/graphql', bodyParser.json(), graphqlExpress({ schema })); // The GraphQL endpoint
-        this.app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' })); // GraphiQL, a visual editor for queries
-        this.app.set('port', (process.env.PORT || 4000));
+        const store = new Store();
+
+        this.server = new ApolloServer({
+            typeDefs,
+            resolvers,
+            dataSources: () => ({
+                userAPI: new UserAPI({ store }),
+            })
+        });
     }
 
     start() {
-        this.app.listen(this.app.get('port'), () => {
-            console.log('Node app is running on port:', this.app.get('port'));
+        this.server.listen().then(({ url }) => {
+            console.log(`🚀 Server ready at ${url}`);
         });
     }
 }
