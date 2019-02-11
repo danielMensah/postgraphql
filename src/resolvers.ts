@@ -5,10 +5,6 @@ export default {
         getUsers: async (_, __, { dataSources }) => dataSources.userAPI.getUsers()
     },
     Mutation: {
-        createUser: async (_, userData: User, { dataSources }) => {
-            const ab = await dataSources.userAPI.createUser(userData);
-            console.log(ab);
-            return ab;
-        }
+        createUser: async (_, userData: User, { dataSources }) => dataSources.userAPI.createUser(userData)
     }
 };
