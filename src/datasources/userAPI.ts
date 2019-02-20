@@ -13,13 +13,13 @@ export default class UserAPI extends RESTDataSource {
     }
 
     async getUsers(): Promise<User[]> {
-        const users = await this.store.pgFunction('functionName');
+        const users = await this.store.pgFunction('rvf_get_users');
 
         return users.map(user => this.reducer(user));
     }
 
     async createUser(userData: User): Promise<User[]> {
-        const result = await this.store.pgFunction('functionName', userData);
+        const result = await this.store.pgFunction('rvf_create_user', userData);
 
         return result.map(data => this.reducer(data));
     }
