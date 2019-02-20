@@ -1,9 +1,10 @@
-import books from './db';
+import { User } from "./datasources/model";
 
-const resolvers = {
-  Query: {
-    books: () => books
-  },
+export default {
+    Query: {
+        getUsers: async (_, __, { dataSources }) => dataSources.userAPI.getUsers()
+    },
+    Mutation: {
+        createUser: async (_, userData: User, { dataSources }) => dataSources.userAPI.createUser(userData)
+    }
 };
-
-export default resolvers;
