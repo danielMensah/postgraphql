@@ -38,7 +38,3 @@ export default class Store {
         return collection;
     }
 }
-
-// const store = new Store();
-// console.log(store.generatePayloadArray({}));
-// store.pgFunction('bababa', ['firstName', 'lastName'], { firstName: 'Daniel', lastName: 'Mensah' });
