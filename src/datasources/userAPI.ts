@@ -18,8 +18,8 @@ export default class UserAPI extends RESTDataSource {
         return users.map(user => this.reducer(user));
     }
 
-    async createUser(user: User): Promise<User[]> {
-        const result = await this.store.pgFunction('rvf_create_user', user);
+    async createUser(userData: User): Promise<User[]> {
+        const result = await this.store.pgFunction('rvf_create_user', userData);
 
         return result.map(data => this.reducer(data));
     }
